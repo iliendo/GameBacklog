@@ -46,12 +46,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
 
         gamesList = new ArrayList<>();
 
+        // Initialize the ui
         initViewModel();
         initToolbar();
         initFAB();
         initRecyclerView();
     }
 
+    // Initialize the list of live data
     private void initViewModel(){
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mainViewModel.getGamesList().observe(this, new Observer<List<Game>>() {
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
             adapter.updateGamesList(gamesList);
     }
 
+    // Initialize the functionality of the FAB
     private void initFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         });
     }
 
+    // Initialize the reciclerview with the correct layout
     private void initRecyclerView(){
         adapter = new GameAdapter(gamesList);
         gamesRecyclerView = findViewById(R.id.backlogView);
@@ -102,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         gamesRecyclerView.addOnItemTouchListener(this);
     }
 
+    // Setup the touch for the cards
     private void setupItemTouchHelper() {
         ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
                 return false;
             }
 
+            // Setup the swipe to delete functionality
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 int position = (viewHolder.getAdapterPosition());
@@ -118,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
                 gamesList.remove(position);
                 adapter.notifyItemRemoved(position);
 
-                Snackbar undoBar = Snackbar.make(viewHolder.itemView, R.string.deletedSingleMessage + storeGame.getTitle(), Snackbar.LENGTH_LONG);
+                Snackbar undoBar = Snackbar.make(viewHolder.itemView, getString(R.string.deletedSingleMessage) + storeGame.getTitle(), Snackbar.LENGTH_LONG);
                 undoBar.setAction(R.string.undoText, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -132,12 +138,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         touchHelper.attachToRecyclerView(gamesRecyclerView);
     }
 
-
+    // Initialize the top bar
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
+    // Set the layout of the top bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -145,11 +152,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         return true;
     }
 
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -161,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         return super.onOptionsItemSelected(item);
     }
 
+    // Initialize the recyclebin
     private void onDeleteAllClick(List<Game> gamesListing) {
         if (gamesListing.size() > 0) {
 
@@ -180,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         }
     }
 
+    // Start a new activity
     @Override
     public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
         View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
@@ -194,21 +203,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         return false;
     }
 
-    @Override
-    public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-
-    }
-
-    @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean b) {
-
-    }
-
     private String getCurrentDate(){
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         return format.format(Calendar.getInstance().getTime());
     }
 
+    // Depending on the action the game gets added or updated
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == NEWGAMEREQUESTCODE) {
@@ -225,5 +225,17 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
                 mainViewModel.update(updateGame);
             }
         }
+    }
+
+
+    // Extra methods that were implemented
+    @Override
+    public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean b) {
+
     }
 }

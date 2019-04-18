@@ -34,6 +34,8 @@ public class AddGame extends AppCompatActivity {
         statusSelection = findViewById(R.id.statusSpinner);
 
         game = getIntent().getParcelableExtra(MainActivity.UPDATE_GAME);
+
+        // If a game is selected, show the current values of that game else create an empty card
         if (game != null){
             title.setText(game.getTitle());
             platform.setText(game.getPlatform());
@@ -58,6 +60,7 @@ public class AddGame extends AppCompatActivity {
                 String platformText = platform.getText().toString();
                 String statusText = statusSelection.getSelectedItem().toString();
 
+                // Checks what action needs to be performed when clicking the fab
                 if (!TextUtils.isEmpty(titleText) && !TextUtils.isEmpty(platformText)) {
                     if (game != null){
                         game.setTitle(titleText);
@@ -79,6 +82,7 @@ public class AddGame extends AppCompatActivity {
         });
     }
 
+    // Does its trick to save the game
     public void FinishActivity(String activityType, Game someGame){
         Intent resultIntent = new Intent();
         resultIntent.putExtra(activityType, someGame);
