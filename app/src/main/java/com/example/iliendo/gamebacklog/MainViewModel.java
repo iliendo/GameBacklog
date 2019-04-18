@@ -7,11 +7,15 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+/**
+ * Responsible for the data manipulation showing in the ui
+ */
 public class MainViewModel extends AndroidViewModel {
 
     private GameRepository gameRepository;
     private LiveData<List<Game>> gamesList;
 
+    // Gets the information of the game repository
     public MainViewModel(@NonNull Application application) {
         super(application);
         gameRepository = new GameRepository(application.getApplicationContext());

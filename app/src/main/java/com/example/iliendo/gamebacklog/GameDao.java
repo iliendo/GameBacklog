@@ -9,6 +9,9 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+/**
+ * Data Access Object contains all the necessary queries
+ */
 @Dao
 public interface GameDao {
 

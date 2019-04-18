@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+/**
+ * Excecutes the actual queries
+ */
 public class GameRepository {
 
     private GameRoomDatabase gameRoomDatabase;

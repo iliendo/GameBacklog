@@ -7,6 +7,9 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Game object with all its attributes and the queries
+ */
 @Entity(tableName = "game")
 public class Game implements Parcelable {
 
@@ -30,6 +33,36 @@ public class Game implements Parcelable {
         this.platform = platform;
         this.status = status;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.platform);
+        dest.writeString(this.status);
+        dest.writeString(this.date);
+    }
+
+    // Initialize the attributes with the correct values
+    protected Game(Parcel in) {
+        this.id = in.readLong();
+        this.title = in.readString();
+        this.platform = in.readString();
+        this.status = in.readString();
+        this.date = in.readString();
+    }
+
+    public static final Parcelable.Creator<Game> CREATOR = new Parcelable.Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel source) {
+            return new Game(source);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -75,33 +108,4 @@ public class Game implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
-        dest.writeString(this.title);
-        dest.writeString(this.platform);
-        dest.writeString(this.status);
-        dest.writeString(this.date);
-    }
-
-    protected Game(Parcel in) {
-        this.id = in.readLong();
-        this.title = in.readString();
-        this.platform = in.readString();
-        this.status = in.readString();
-        this.date = in.readString();
-    }
-
-    public static final Parcelable.Creator<Game> CREATOR = new Parcelable.Creator<Game>() {
-        @Override
-        public Game createFromParcel(Parcel source) {
-            return new Game(source);
-        }
-
-        @Override
-        public Game[] newArray(int size) {
-            return new Game[size];
-        }
-    };
 }

@@ -5,6 +5,9 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+/**
+ * The Database
+ */
 @Database(entities = {Game.class}, version = 1, exportSchema = false)
 public abstract class GameRoomDatabase extends RoomDatabase {
 
@@ -14,6 +17,7 @@ public abstract class GameRoomDatabase extends RoomDatabase {
 
     private static volatile GameRoomDatabase INSTANCE;
 
+    // Creates the database
     public static GameRoomDatabase getDatabase(final Context context){
         if (INSTANCE == null){
             synchronized (GameRoomDatabase.class){

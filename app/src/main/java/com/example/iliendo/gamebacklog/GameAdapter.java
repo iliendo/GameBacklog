@@ -18,6 +18,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         this.gamesList = gamesList;
     }
 
+    // Creates a gamecard with the gamecard layout
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -27,6 +28,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    // Sets the correct information for the viewholder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Game game = gamesList.get(i);
@@ -41,6 +43,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         return gamesList.size();
     }
 
+    // Updates gamelist
     public void updateGamesList(List<Game> newGamesList) {
         gamesList = newGamesList;
         if (newGamesList != null)
@@ -54,6 +57,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         private TextView status;
         private TextView date;
 
+        // Initialize the variables with the layout
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.titleLabel);
